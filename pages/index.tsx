@@ -16,7 +16,7 @@ const Home: NextPage = (): JSX.Element => {
         <title>Portfolio</title>
       </Head>
       <Center data-aos='fade-up' data-aos-duration='1200'>
-          <Title order={1} className={globalClasses.h1}>My name is Andrew and i'm frontend developer</Title>
+          <Title order={1} className={globalClasses.h1}>My name is Andrew and i&apos;m frontend developer</Title>
       </Center>
       <Center data-aos='fade-up' data-aos-duration='1500'>
           <Title order={2} className={globalClasses.h2}>All that you want to know about me you can find here</Title>
