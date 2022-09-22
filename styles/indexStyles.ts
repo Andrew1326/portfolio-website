@@ -1,7 +1,15 @@
 import { createStyles, keyframes } from "@mantine/core";
 
 //* keyframes 
-const blobMove = keyframes({
+const smallScreenMove = keyframes({
+    '0%': { marginTop: '9%' },
+    '20%': { marginTop: '11%' },
+    '50%': { marginTop: '13%' },
+    '80%': { marginTop: '11%' },
+    '100%': { marginTop: '9%' }
+})
+
+const normalScreenMove = keyframes({
     '0%': { marginTop: '2%' },
     '20%': { marginTop: '3%' },
     '50%': { marginTop: '4%' },
@@ -14,61 +22,70 @@ export const useStyles = createStyles(theme => ({
     blob: {
         borderRadius: '50%',
         position: 'absolute',
-        animationName: `${blobMove}`,
         animationIterationCount: 'infinite',
         animationDelay: '2s',
         animationDuration: '15s',
 
         ':nth-child(3)': {
-            marginTop: '2%',
             background: 'linear-gradient(to left bottom, #12c2e9, #c471ed, #f64f59)',
     
             '@media (min-width: 320px)': {
-                width: '150px',
-                height: '150px',
-                left: '0'
+                width: '140px',
+                height: '140px',
+                left: '0',
+                marginTop: '9%'
             },
             '@media (min-width: 481px)': {
                 width: '250px',
                 height: '250px',
-                left: '3%'
+                left: '3%',
             },
             '@media (min-width: 769px)': {
                 width: '350px',
                 height: '350px',
-                left: '5%'
+                left: '5%',
+                marginTop: '3%'
             },
             '@media (min-width: 1025px)': { left: '15%' },
         },
 
         ':nth-child(4)': {
-            marginTop: '2%',
             background: 'linear-gradient(to right top, #12c2e9, #c471ed, #f64f59)',
     
             '@media (min-width: 320px)': {
-                width: '100px',
-                height: '100px',
-                right: '0'
+                width: '90px',
+                height: '90px',
+                right: '0',
+                marginTop: '9%'
             },
             '@media (min-width: 481px)': {
                 width: '150px',
                 height: '150px',
-                right: '3%'
+                right: '3%',
+                marginTop: '3%'
             },
             '@media (min-width: 769px)': {
                 width: '250px',
                 height: '250px',
                 right: '5%'
             },
+            
             '@media (min-width: 1025px)': { right: '17%' }
-        }
+        },
+
+        '@media (min-width: 320px)': { animationName: `${smallScreenMove}` },
+
+        '@media (min-width: 481px)': { animationName: `${normalScreenMove}` },
     },
 
     poster_container: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '3%'
+        marginTop: '3%',
+
+        '@media (min-width: 320px)': { marginTop: '10%' },
+        '@media (min-width: 481px)': { marginTop: '3%' },
     },
 
     poster: {
@@ -81,7 +98,7 @@ export const useStyles = createStyles(theme => ({
 
         '@media (min-width: 320px)': {
             width: '100%',
-            height: '300px'
+            height: '200px'
         },
         '@media (min-width: 481px)': {
             width: '80%',

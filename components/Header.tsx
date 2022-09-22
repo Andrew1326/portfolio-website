@@ -23,13 +23,13 @@ const Header = ({colorScheme, toggleColorScheme}: TProps): JSX.Element => {
 
     //* links
     const links: ILink[] = [
-        {href: '/about', text: 'About Me', show: true},
-        {href: '/skills', text: 'Skills', show: true},
+        {href: '/about', text: 'About Me', show: !smallerThan380},
+        {href: '/skills', text: 'Skills', show: !smallerThan380},
         {href: '/education', text: 'Education', show: !smallerThan380},
         {href: '/projects', text: 'Projects', show: !smallerThan481}
     ]
 
-    //* if dark
+    //* is dark
     const dark: boolean = colorScheme === 'dark'
 
     return (

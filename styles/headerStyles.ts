@@ -6,7 +6,10 @@ export const useStyles = createStyles(theme => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0]
+        backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0],
+
+        '@media (min-width: 320px)': { height: '40px' },
+        '@media (min-width: 481px)': { height: '70px' },
     },
 
     content_container: {
@@ -24,9 +27,7 @@ export const useStyles = createStyles(theme => ({
         height: '50px'
     },
 
-    menu: {
-        ':hover': { backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0] }
-    },
+    menu: { ':hover': { backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0] } },
 
     logo_container: { 
         ':hover': { textDecoration: 'none' }

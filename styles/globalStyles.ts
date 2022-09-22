@@ -3,14 +3,14 @@ import { createStyles } from "@mantine/core";
 
 export const useGlobalStyles = createStyles(theme => ({
     h1: {
-        '@media (min-width: 320px)': { fontSize: '250%' },
+        '@media (min-width: 320px)': { fontSize: '170%' },
         '@media (min-width: 481px)': { fontSize: '300%' },
         '@media (min-width: 769px)': { fontSize: '350%' },
         '@media (min-width: 1025px)': { fontSize: '400%' }
     },
 
     h2: {
-        '@media (min-width: 320px)': { fontSize: '225%' },
+        '@media (min-width: 320px)': { fontSize: '0' },
         '@media (min-width: 769px)': { fontSize: '250%' },
         '@media (min-width: 1025px)': { fontSize: '300%' },
     },
@@ -22,7 +22,7 @@ export const useGlobalStyles = createStyles(theme => ({
     },
 
     text: { 
-        marginTop: '2%',
+        margin: '1% 0 1% 0',
         
         '@media (min-width: 320px)': { fontSize: '130%' },
         '@media (min-width: 481px)': { fontSize: '160%' },

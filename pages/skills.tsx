@@ -1,4 +1,4 @@
-import { Center, Container, Box, Title, Text, Transition } from "@mantine/core";
+import { Center, Container, Box, Title, Text } from "@mantine/core";
 import { NextPage } from "next";
 import htmlSrc from '../images/html5.png'
 import cssSrc from '../images/css3.png'
@@ -24,7 +24,7 @@ const HardSkills: NextPage = (): JSX.Element => {
     const largerThan320 = useMediaQuery('(min-width: 320px)')
     const largerThan769 = useMediaQuery('(min-width: 769px)')
     
-    const imageSize = (largerThan320 && !largerThan769) ? '90px' : '115px'
+    const imageSize = (largerThan320 && !largerThan769) ? '80px' : '115px'
 
     //* technologies
     const technologies: ITechnology[] = [
