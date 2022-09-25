@@ -1,5 +1,4 @@
 import create from "zustand";
-import { persist } from "zustand/middleware";
 import { IProject } from "../appTypes";
 import { IData as IProjectsData } from '../helpers/projects'
 
@@ -20,8 +19,7 @@ interface IState {
     editProject: (projectData: IUpdateProjectData) => Promise<void>
 }
 
-const useProjectsStore = create<IState>()(
-    persist((set, get) => ({
+const useProjectsStore = create<IState>()((set, get) => ({
         projects: null,
         loading: false,
         error: null,
@@ -110,10 +108,6 @@ const useProjectsStore = create<IState>()(
 
         //* select project
         selectProject: (id) => set({selectedProjectId: id})
-    }),
-    {
-        name: 'projectsStore',
-        getStorage: () => sessionStorage
     })
 )
 

@@ -5,7 +5,7 @@ import { useLocalStorage, useWindowScroll } from '@mantine/hooks';
 import Header from '../components/Header';
 import AOS from 'aos';
 import "aos/dist/aos.css";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ToTopBtn from '../components/ToTopBtn';
 import { Fonts } from '../components/Fonts';
 
@@ -13,7 +13,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const theme = useMantineTheme()
 
+  const [showChild, setShowChild] = useState<boolean>(false)
   const [scroll, scrollTo] = useWindowScroll()
+
+  useEffect(() => {
+    setShowChild(true)
+  }, [])
 
   //* aos init
   useEffect(() => {
@@ -56,7 +61,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#000000" />
         <meta name="description" content="My portfolio" />
       </Head>
-      <MantineProvider theme={colorTheme} withGlobalStyles withNormalizeCSS>
+      {
+        showChild && <MantineProvider theme={colorTheme} withGlobalStyles withNormalizeCSS>
         <Fonts />
         <AppShell header={<Header {...headerProps} />}>
           <Component {...pageProps} />
@@ -65,6 +71,7 @@ export default function App({ Component, pageProps }: AppProps) {
           scroll.y > 0 && <ToTopBtn {...toTopBtnProps} />
         }
       </MantineProvider>
+      }
     </>
   );
 }
