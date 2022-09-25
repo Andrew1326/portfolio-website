@@ -5,7 +5,7 @@ export const useStyles = createStyles(theme => ({
         background: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0],
         borderRadius: '10px',
         margin: '1% 0 1% 0',
-        boxShadow: `12px 12px 20px 0px ${theme.colors.gray[theme.colorScheme === 'dark' ? 10 : 3]}`,
+        boxShadow: theme.colorScheme === 'dark' ? 'none' : `12px 12px 20px 16px ${theme.colors.gray[3]}`,
 
         '@media (min-width: 320px)': { 
             width: '100%',

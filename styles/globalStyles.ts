@@ -1,16 +1,15 @@
 import { createStyles } from "@mantine/core";
 
-
 export const useGlobalStyles = createStyles(theme => ({
     h1: {
-        '@media (min-width: 320px)': { fontSize: '170%' },
+        '@media (min-width: 320px)': { fontSize: '180%' },
         '@media (min-width: 481px)': { fontSize: '300%' },
         '@media (min-width: 769px)': { fontSize: '350%' },
         '@media (min-width: 1025px)': { fontSize: '400%' }
     },
 
     h2: {
-        '@media (min-width: 320px)': { fontSize: '0' },
+        '@media (min-width: 320px)': { fontSize: '170%' },
         '@media (min-width: 769px)': { fontSize: '250%' },
         '@media (min-width: 1025px)': { fontSize: '300%' },
     },

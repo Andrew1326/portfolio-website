@@ -1,13 +1,13 @@
 import { Center, Container, Box, Title, Text } from "@mantine/core";
 import { NextPage } from "next";
-import htmlSrc from '../images/html5.png'
-import cssSrc from '../images/css3.png'
-import jsSrc from '../images/js.png'
-import tsSrc from '../images/ts.png'
-import reactSrc from '../images/react.png'
-import nextSrc from '../images/next.png'
-import gitSrc from '../images/git.png'
-import githubSrc from '../images/github.png'
+import htmlSrc from '/public/html5.png'
+import cssSrc from '/public/css3.png'
+import jsSrc from '/public/js.png'
+import tsSrc from '/public/ts.png'
+import reactSrc from '/public/react.png'
+import nextSrc from '/public/next.png'
+import gitSrc from '/public/git.png'
+import githubSrc from '/public/github.png'
 import NextImage from 'next/image'
 import { useStyles } from "../styles/skillsStyles";
 import { useGlobalStyles } from "../styles/globalStyles";
@@ -60,7 +60,7 @@ const HardSkills: NextPage = (): JSX.Element => {
             <Center><Title sx={{ marginTop: '3%' }} className={globalClasses.h2}>Soft skills</Title></Center>
             <Box className={classes.soft_skills_container}>
                 {
-                    softSkills.map((el, i) => <Box key={i} data-aos='zoom-in' data-aos-duration={(i * 1000)} className={classes.soft_skill}>
+                    softSkills.map((el, i) => <Box key={i} data-aos='zoom-in' data-aos-duration={(i * 400)} className={classes.soft_skill}>
                     <Text className={globalClasses.text}>{el}</Text>
                 </Box>)
                 }

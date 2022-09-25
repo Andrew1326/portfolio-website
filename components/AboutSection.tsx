@@ -13,7 +13,7 @@ const AboutSection = ({title, text}: ISection): JSX.Element => {
             <Center>
                 <Title className={globalClasses.h2}>{title}</Title>
             </Center>
-            <Text className={globalClasses.text}>{text}</Text>
+            <Text className={globalClasses.text} dangerouslySetInnerHTML={{__html: text}}></Text>
         </Box>
     )
 }

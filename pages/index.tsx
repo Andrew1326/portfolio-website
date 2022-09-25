@@ -29,7 +29,7 @@ const Home: NextPage = (): JSX.Element => {
           <Title order={1} className={globalClasses.h1}>My name is Andrew and i&apos;m frontend developer</Title>
       </Center>
       <Center data-aos='fade-up' data-aos-duration='1500'>
-        <Title order={2} className={globalClasses.h2}>All that you want to know about me you can find here</Title>
+        <Title order={2} className={globalClasses.h2}>{smallerThan481 ? '' : 'All that you want to know about me you can find here'}</Title>
       </Center>
       <Box className={classes.blob}></Box>
       <Box className={classes.blob}></Box>

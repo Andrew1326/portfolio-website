@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { Box, Container } from "@mantine/core";
-import localcodingSrc from '../images/localcoding.png'
-import codewarsSrc from '../images/codewars.png'
+import localcodingSrc from '/public/localcoding.png'
+import codewarsSrc from '/public/codewars.png'
 import { IImage } from "../appTypes";
 import Image from "next/image";
 import { useStyles } from "../styles/educationStyles";

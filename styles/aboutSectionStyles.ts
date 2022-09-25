@@ -7,6 +7,7 @@ export const useStyles = createStyles(theme => ({
         padding: '2%',
         background: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0],
         borderRadius: '10px',
+        boxShadow: theme.colorScheme === 'dark' ? 'none' : `12px 12px 20px 16px ${theme.colors.gray[3]}`,
 
         '@media (min-width: 320px)': { 
             margin: '5% 0 5% 0',
