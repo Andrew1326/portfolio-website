@@ -1,4 +1,4 @@
-import { Container, Title, Box, Button, Center } from "@mantine/core";
+import { Title, Box, Button, Center } from "@mantine/core";
 import { NextPage } from "next";
 import { useGlobalStyles } from "../styles/globalStyles";
 import { useStyles } from "../styles/projectsStyles";
@@ -10,6 +10,8 @@ import EditModal from "../components/EditModal";
 import DeleteModal from "../components/DeleteModal";
 import AddModal from "../components/AddModal";
 import Project from "../components/Project";
+import Loader from '../components/Loader'
+import ErrorAlert from '../components/ErrorAlert'
 
 const Projects: NextPage = (): JSX.Element => {
 
@@ -24,6 +26,8 @@ const Projects: NextPage = (): JSX.Element => {
     //* from store
     const isAdmin = useUserStore(state => state.isAdmin)
     const projects = useProjectsStore(state => state.projects)
+    const loading = useProjectsStore(state => state.loading)
+    const error = useProjectsStore(state => state.error)
     const getProjects = useProjectsStore(state => state.getProjects)
 
     //* projects
@@ -63,7 +67,15 @@ const Projects: NextPage = (): JSX.Element => {
             </Center>
             <Box className={classes.projects_container}>
                 {
-                    projects?.map((el, i) => <Project key={i} project={el} id={i} setEditModalOpen={setEditModalOpen} setDeleteModalOpen={setDeleteModalOpen} />)
+                    projects ? projects.map((el, i) => <Project key={i} project={el} id={i} setEditModalOpen={setEditModalOpen} setDeleteModalOpen={setDeleteModalOpen} />)
+                    :
+                    loading ? <Box className={classes.centered_elem}>
+                        <Loader />
+                    </Box>
+                    :
+                    error && <Box className={classes.centered_elem}>
+                        <ErrorAlert error={{name: 'Name', message: 'some message'}} />
+                    </Box>
                 }
             </Box>
         </Box>

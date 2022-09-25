@@ -60,7 +60,7 @@ const HardSkills: NextPage = (): JSX.Element => {
             <Center><Title sx={{ marginTop: '3%' }} className={globalClasses.h2}>Soft skills</Title></Center>
             <Box className={classes.soft_skills_container}>
                 {
-                    softSkills.map((el, i) => <Box key={i} data-aos='zoom-in' data-aos-duration={(i * 400)} className={classes.soft_skill}>
+                    softSkills.map((el, i) => <Box key={i} data-aos='zoom-in' data-aos-duration={(i * 500)} className={classes.soft_skill}>
                     <Text className={globalClasses.text}>{el}</Text>
                 </Box>)
                 }

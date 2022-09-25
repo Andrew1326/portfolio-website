@@ -14,5 +14,10 @@ export const useStyles = createStyles(theme => ({
         alignItems: 'center',
         flexDirection: 'column',
         marginTop: '2%'
+    },
+
+    centered_elem: {
+        position: 'absolute',
+        top: '50%'
     }
 }))
