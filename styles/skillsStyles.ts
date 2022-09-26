@@ -10,7 +10,14 @@ export const useStyles = createStyles(theme => ({
         marginTop: '3%'
     },
 
-    technology: { margin: '2%' },
+    technology: { 
+        margin: '2%',
+
+        '&:hover': { 
+            cursor: 'pointer',
+            color: '#4295df' 
+        }
+    },
 
     soft_skills_container: {
         marginTop: '2%',

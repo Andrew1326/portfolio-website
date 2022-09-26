@@ -14,13 +14,16 @@ import { useGlobalStyles } from "../styles/globalStyles";
 import { useMediaQuery } from "@mantine/hooks";
 import { ITechnology } from "../appTypes";
 import Head from "next/head";
+import useSearch from "../hooks/useSearch";
 
 const HardSkills: NextPage = (): JSX.Element => {
 
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
 
-    //* meadia queries
+    const open = useSearch()
+
+    //* media queries
     const largerThan320 = useMediaQuery('(min-width: 320px)')
     const largerThan769 = useMediaQuery('(min-width: 769px)')
     
@@ -51,13 +54,15 @@ const HardSkills: NextPage = (): JSX.Element => {
             </Center>
             <Box className={classes.technologies_container}>
                 {
-                    technologies.map((el, i) => <Box key={i} data-aos='fade-down-right' data-aos-duration={el.duration} className={classes.technology}>
+                    technologies.map((el, i) => <Box key={i} data-aos='fade-down-right' data-aos-duration={el.duration} className={classes.technology} onClick={() => open(el.name)}>
                     <NextImage src={el.src} alt={el.name} width={imageSize} height={imageSize} />
                     <Text className={globalClasses.text} sx={{ textAlign: 'center' }}>{el.name}</Text>
                 </Box>)
                 }
             </Box>
-            <Center><Title sx={{ marginTop: '3%' }} className={globalClasses.h2}>Soft skills</Title></Center>
+            <Center>
+                <Title sx={{ marginTop: '3%' }} className={globalClasses.h2}>Soft skills</Title>
+            </Center>
             <Box className={classes.soft_skills_container}>
                 {
                     softSkills.map((el, i) => <Box key={i} data-aos='zoom-in' data-aos-duration={(i * 500)} className={classes.soft_skill}>

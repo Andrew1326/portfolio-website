@@ -31,6 +31,6 @@ export const useGlobalStyles = createStyles(theme => ({
         width: '30px',
         height: '30px',
 
-        ':hover': { backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0] }
+        '&:hover': { backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0] }
     }
 }))

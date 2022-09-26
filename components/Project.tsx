@@ -4,7 +4,7 @@ import { IProject } from "../appTypes";
 import { useGlobalStyles } from "../styles/globalStyles";
 import { useStyles } from "../styles/projectStyles";
 import { Trash, Edit } from "tabler-icons-react";
-import useWindow from "../hooks/useWindow";
+import useSearch from "../hooks/useSearch";
 import useUserStore from "../stores/userStore";
 import useProjectsStore from "../stores/projectsStore";
 
@@ -22,7 +22,7 @@ const Project = ({project, id, setEditModalOpen, setDeleteModalOpen}: TProps): J
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
 
-    const open = useWindow()
+    const open = useSearch()
 
     //* from store
     const isAdmin = useUserStore(state => state.isAdmin)

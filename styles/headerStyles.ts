@@ -30,7 +30,7 @@ export const useStyles = createStyles(theme => ({
     menu: { ':hover': { backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0] } },
 
     logo_container: { 
-        ':hover': { textDecoration: 'none' }
+        '&:hover': { textDecoration: 'none' }
     },
 
     logo: {
@@ -41,7 +41,7 @@ export const useStyles = createStyles(theme => ({
         fontWeight: 'bold',
         fontSize: '17px',
 
-        ':hover': { cursor: 'pointer' }
+        '&:hover': { cursor: 'pointer' }
     },
 
     links_container: {
@@ -53,6 +53,11 @@ export const useStyles = createStyles(theme => ({
 
     link: { 
         fontSize: '17px',
-        margin: '0 1% 0 1%' 
+        margin: '0 1% 0 1%',
+
+        '&:hover': { 
+            color: '#4295df',
+            textDecoration: 'none' 
+        }
     }
 }))
