@@ -1,6 +1,6 @@
 import { createStyles } from "@mantine/core";
 
-export const useStyles = createStyles(theme => ({
+export const useStyles = createStyles({
     add_project_btn: {
         marginTop: '2%',
 
@@ -20,4 +20,4 @@ export const useStyles = createStyles(theme => ({
         position: 'absolute',
         top: '50%'
     }
-}))
+})

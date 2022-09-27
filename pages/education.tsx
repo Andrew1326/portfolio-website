@@ -24,7 +24,7 @@ const Education: NextPage = (): JSX.Element => {
             </Head>
             <Box className={classes.images_container}>
             {
-                images.map((el, i) => <Image key={i} height='750px' src={el.src} alt={el.alt} />)
+                images.map((el, i) => <Image key={i} src={el.src} alt={el.alt} />)
             }
             </Box>
         </Container>

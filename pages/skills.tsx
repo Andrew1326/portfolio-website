@@ -1,4 +1,4 @@
-import { Center, Container, Box, Title, Text } from "@mantine/core";
+import { Center, Container, Box, Title } from "@mantine/core";
 import { NextPage } from "next";
 import htmlSrc from '/public/html5.png'
 import cssSrc from '/public/css3.png'
@@ -8,26 +8,17 @@ import reactSrc from '/public/react.png'
 import nextSrc from '/public/next.png'
 import gitSrc from '/public/git.png'
 import githubSrc from '/public/github.png'
-import NextImage from 'next/image'
 import { useStyles } from "../styles/skillsStyles";
 import { useGlobalStyles } from "../styles/globalStyles";
-import { useMediaQuery } from "@mantine/hooks";
 import { ITechnology } from "../appTypes";
 import Head from "next/head";
-import useSearch from "../hooks/useSearch";
+import Technology from "../components/Technology";
+import SoftSkill from "../components/SoftSkill";
 
 const HardSkills: NextPage = (): JSX.Element => {
 
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
-
-    const open = useSearch()
-
-    //* media queries
-    const largerThan320 = useMediaQuery('(min-width: 320px)')
-    const largerThan769 = useMediaQuery('(min-width: 769px)')
-    
-    const imageSize = (largerThan320 && !largerThan769) ? '80px' : '115px'
 
     //* technologies
     const technologies: ITechnology[] = [
@@ -54,10 +45,7 @@ const HardSkills: NextPage = (): JSX.Element => {
             </Center>
             <Box className={classes.technologies_container}>
                 {
-                    technologies.map((el, i) => <Box key={i} data-aos='fade-down-right' data-aos-duration={el.duration} className={classes.technology} onClick={() => open(el.name)}>
-                    <NextImage src={el.src} alt={el.name} width={imageSize} height={imageSize} />
-                    <Text className={globalClasses.text} sx={{ textAlign: 'center' }}>{el.name}</Text>
-                </Box>)
+                    technologies.map((el, i) => <Technology technology={el} key={i} />)
                 }
             </Box>
             <Center>
@@ -65,9 +53,7 @@ const HardSkills: NextPage = (): JSX.Element => {
             </Center>
             <Box className={classes.soft_skills_container}>
                 {
-                    softSkills.map((el, i) => <Box key={i} data-aos='zoom-in' data-aos-duration={(i * 500)} className={classes.soft_skill}>
-                    <Text className={globalClasses.text}>{el}</Text>
-                </Box>)
+                    softSkills.map((el, i) => <SoftSkill softSkill={el} index={i} key={i} />)
                 }
             </Box>
         </Container>

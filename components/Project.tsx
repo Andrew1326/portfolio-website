@@ -1,12 +1,12 @@
-import { Box, Button, ActionIcon, Space, Text, Badge } from "@mantine/core";
+import { Box, Button, ActionIcon, Space, Text } from "@mantine/core";
 import { MouseEventHandler, SetStateAction } from "react";
 import { IProject } from "../appTypes";
 import { useGlobalStyles } from "../styles/globalStyles";
 import { useStyles } from "../styles/projectStyles";
 import { Trash, Edit } from "tabler-icons-react";
-import useSearch from "../hooks/useSearch";
 import useUserStore from "../stores/userStore";
 import useProjectsStore from "../stores/projectsStore";
+import TechnologyBadge from "./TechnologyBadge";
 
 type TSetModalOpen = (value: SetStateAction<boolean>) => void
 
@@ -21,8 +21,6 @@ const Project = ({project, id, setEditModalOpen, setDeleteModalOpen}: TProps): J
 
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
-
-    const open = useSearch()
 
     //* from store
     const isAdmin = useUserStore(state => state.isAdmin)
@@ -61,7 +59,7 @@ const Project = ({project, id, setEditModalOpen, setDeleteModalOpen}: TProps): J
             <Box className={classes.technologies_container}>
                 <Text size='md' weight='600'>Technologies:</Text>&nbsp;
                     {
-                        project.technologies.map((el, i) => <Badge mx='1%' size='md' key={i} sx={{ cursor: 'pointer' }} onClick={() => open(el)}>{el}</Badge>)
+                        project.technologies.map((el, i) => <TechnologyBadge technology={el} key={i} />)
                     }
             </Box>
             <Box className={classes.project_buttons_container}>

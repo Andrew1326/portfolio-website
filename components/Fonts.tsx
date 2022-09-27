@@ -9,9 +9,9 @@ export function Fonts() {
             src: `url('../fonts/Archivo/Archivo-Regular.ttf') format("ttf")`,
             fontWeight: 700,
             fontStyle: 'normal',
-          },
+          }
         }
       ]}
     />
-  );
+  )
 }
