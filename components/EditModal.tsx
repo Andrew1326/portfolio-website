@@ -1,24 +1,26 @@
 import { Modal, Stack, TextInput, Textarea, Group, Button } from "@mantine/core"
 import { useForm } from "@mantine/form";
+import { ObjectId, WithId } from "mongodb";
 import { Dispatch, SetStateAction } from "react"
 import { IProject } from "../appTypes";
 import useProjectsStore from "../stores/projectsStore";
 
-interface IFormValues extends Omit<IProject, 'technologies'> { technologies: string; }
+interface IFormValues extends Omit<IProject, 'technologies'> { technologies: string | string[]; }
 
 type TProps = {
     isOpen: boolean,
-    setIsOpen: Dispatch<SetStateAction<boolean>>
+    setIsOpen: Dispatch<SetStateAction<boolean>>,
+    setProjectsUpdateNeeded: (value: SetStateAction<boolean>) => void
 }
 
-const EditModal = ({isOpen, setIsOpen}: TProps): JSX.Element => {
+const EditModal = ({isOpen, setIsOpen, setProjectsUpdateNeeded}: TProps): JSX.Element => {
 
     //* from store
-    const projects = useProjectsStore(state => state.projects) as IProject[]
-    const selectedProjectId = useProjectsStore(state => state.selectedProjectId) as number
-    const editProject = useProjectsStore(state => state.editProject)
+    const projects = useProjectsStore(state => state.projects) as WithId<IProject>[]
+    const selectedProjectId = useProjectsStore(state => state.selectedProjectId) as ObjectId
+    const updateProject = useProjectsStore(state => state.updateProject)
 
-    const selectedProject = projects[selectedProjectId]
+    const selectedProject = projects.filter(el => el._id === selectedProjectId)[0]
 
     //* handle close
     const handleClose = (): void => setIsOpen(false)
@@ -35,23 +37,23 @@ const EditModal = ({isOpen, setIsOpen}: TProps): JSX.Element => {
     })
 
     //* filter results
-    const filterResults = (results: IFormValues): IProject => {
-        results.technologies.split(', ')
+    const filterResults = (results: IFormValues): Partial<IProject> => {
+        const filtered: Partial<IFormValues> = Object.fromEntries(Object.entries(results).filter(el => !!el[1]))
+        
+        if (filtered.technologies) {
+            const technologies = filtered.technologies as string
+            filtered.technologies = technologies.split(',')
+        }
 
-        const projectArr = Object.entries(selectedProject)
-        const resultsArr = Object.entries(results)
-
-        const updatedProject = resultsArr.map((el, i) => el[1].length > 0 ? el : projectArr[i])
-
-        return Object.fromEntries(updatedProject) as IProject
+        return filtered as Partial<IProject>
     }
 
     //* submit
-    const submit = (values: IFormValues): void => {
-        editProject({
-            id: selectedProjectId,
-            updatedProject: filterResults(values)
-        })
+    const submit = async (values: IFormValues): Promise<void> => {
+        const updatedFields = filterResults(values)
+
+        const resStatus = await updateProject(updatedFields, selectedProject._id)
+        if (resStatus && resStatus < 300) setProjectsUpdateNeeded(true)
 
         form.reset()
         setIsOpen(false)

@@ -7,17 +7,17 @@ import { Trash, Edit } from "tabler-icons-react";
 import useUserStore from "../stores/userStore";
 import useProjectsStore from "../stores/projectsStore";
 import TechnologyBadge from "./TechnologyBadge";
+import { WithId } from "mongodb";
 
 type TSetModalOpen = (value: SetStateAction<boolean>) => void
 
 type TProps = {
-    project: IProject,
-    id: number,
+    project: WithId<IProject>,
     setEditModalOpen: TSetModalOpen,
     setDeleteModalOpen: TSetModalOpen
 }
 
-const Project = ({project, id, setEditModalOpen, setDeleteModalOpen}: TProps): JSX.Element => {
+const Project = ({project, setEditModalOpen, setDeleteModalOpen}: TProps): JSX.Element => {
 
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
@@ -27,14 +27,14 @@ const Project = ({project, id, setEditModalOpen, setDeleteModalOpen}: TProps): J
     const selectProject = useProjectsStore(state => state.selectProject)
 
     //* open edit modal
-    const openEditModal = (id: number): MouseEventHandler<HTMLButtonElement> => () => {
-        selectProject(id)
+    const openEditModal: MouseEventHandler<HTMLButtonElement> = () => {
+        selectProject(project._id)
         setEditModalOpen(true)
     }
 
     //* open delete modal
-    const openDeleteModal = (id: number): MouseEventHandler<HTMLButtonElement> => () => {
-        selectProject(id)
+    const openDeleteModal: MouseEventHandler<HTMLButtonElement> = () => {
+        selectProject(project._id)
         setDeleteModalOpen(true)
     }
 
@@ -44,10 +44,10 @@ const Project = ({project, id, setEditModalOpen, setDeleteModalOpen}: TProps): J
                 <Text className={classes.project_title}>{project.title}</Text>
                 {
                     isAdmin() && <Box className={classes.project_icons_container}>
-                        <ActionIcon className={globalClasses.action_icon} mr='10%' onClick={openEditModal(id)}>
+                        <ActionIcon className={globalClasses.action_icon} mr='10%' onClick={openEditModal}>
                             <Edit />
                         </ActionIcon>
-                        <ActionIcon className={globalClasses.action_icon} onClick={openDeleteModal(id)}>
+                        <ActionIcon className={globalClasses.action_icon} onClick={openDeleteModal}>
                             <Trash />
                         </ActionIcon>
                     </Box>

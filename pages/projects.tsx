@@ -14,9 +14,10 @@ import Loader from '../components/Loader'
 import ErrorAlert from '../components/ErrorAlert'
 
 const Projects: NextPage = (): JSX.Element => {
-
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
+
+    const [projectsUpdateNeeded, setProjectsUpdateNeeded] = useState<boolean>(true)
 
     //* modals
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false)
@@ -32,17 +33,18 @@ const Projects: NextPage = (): JSX.Element => {
 
     //* projects
     useEffect(() => {
-        getProjects()
+        projectsUpdateNeeded && getProjects()
+        return () => setProjectsUpdateNeeded(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [projectsUpdateNeeded])
 
     //* open add modal
     const openAddModal = (): void => setAddModalOpen(true)
 
     //* props
-    const editModalProps = {isOpen: editModalOpen, setIsOpen: setEditModalOpen}
-    const deleteModalProps = {isOpen: deleteModalOpen, setIsOpen: setDeleteModalOpen}
-    const addModalProps = {isOpen: addModalOpen, setIsOpen: setAddModalOpen}
+    const editModalProps = {isOpen: editModalOpen, setIsOpen: setEditModalOpen, setProjectsUpdateNeeded}
+    const deleteModalProps = {isOpen: deleteModalOpen, setIsOpen: setDeleteModalOpen, setProjectsUpdateNeeded}
+    const addModalProps = {isOpen: addModalOpen, setIsOpen: setAddModalOpen, setProjectsUpdateNeeded}
 
     return (
         <>
@@ -67,14 +69,14 @@ const Projects: NextPage = (): JSX.Element => {
             </Center>
             <Box className={classes.projects_container}>
                 {
-                    projects ? projects.map((el, i) => <Project key={i} project={el} id={i} setEditModalOpen={setEditModalOpen} setDeleteModalOpen={setDeleteModalOpen} />)
+                    projects ? projects.map((el, i) => <Project key={i} project={el} setEditModalOpen={setEditModalOpen} setDeleteModalOpen={setDeleteModalOpen} />)
                     :
                     loading ? <Box className={classes.centered_elem}>
                         <Loader />
                     </Box>
                     :
                     error && <Box className={classes.centered_elem}>
-                        <ErrorAlert error={{name: 'Name', message: 'some message'}} />
+                        <ErrorAlert error={error} />
                     </Box>
                 }
             </Box>

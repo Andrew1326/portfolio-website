@@ -1,24 +1,28 @@
 import { Button, Center, Group, Modal, Text } from "@mantine/core"
+import { ObjectId } from "mongodb"
 import { Dispatch, MouseEventHandler, SetStateAction } from "react"
 import useProjectsStore from "../stores/projectsStore"
 
 type TProps = {
     isOpen: boolean,
-    setIsOpen: Dispatch<SetStateAction<boolean>>
+    setIsOpen: Dispatch<SetStateAction<boolean>>,
+    setProjectsUpdateNeeded: (value: SetStateAction<boolean>) => void
 }
 
-const DeleteModal = ({isOpen, setIsOpen}: TProps): JSX.Element => {
+const DeleteModal = ({isOpen, setIsOpen, setProjectsUpdateNeeded}: TProps): JSX.Element => {
 
     //* from store
     const deleteProject = useProjectsStore(state => state.deleteProject)
-    const selectedProjectId = useProjectsStore(state => state.selectedProjectId) as number
+    const selectedProjectId = useProjectsStore(state => state.selectedProjectId) as ObjectId
 
     //* handle close
     const handleClose = (): void => setIsOpen(false)
 
     //* remove project
-    const removeProject: MouseEventHandler<HTMLButtonElement> = () => {
-        deleteProject(selectedProjectId)
+    const removeProject: MouseEventHandler<HTMLButtonElement> = async () => {
+        const resStatus = await deleteProject(selectedProjectId)
+        if (resStatus && resStatus < 300) setProjectsUpdateNeeded(true)
+
         setIsOpen(false)
     }
 

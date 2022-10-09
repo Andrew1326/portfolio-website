@@ -1,21 +1,23 @@
+import { WithId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import { IProject } from "../../appTypes";
-import { addProject as addNewProject } from "../../helpers/projects";
+import { connectToDatabase } from "../../data/db";
 
-interface IResponseData {
-    projects?: IProject[];
-    error?: Error;
-}
+type TReqBody = WithId<IProject>
 
-const addProject = (req: NextApiRequest, res: NextApiResponse<IResponseData>): void => {
-    const project: IProject = JSON.parse(req.body)
+type TRes = { error: Error | null } | void
+
+const addProject = async (req: NextApiRequest, res: NextApiResponse): Promise<TRes> => {
+    const project: TReqBody = JSON.parse(req.body)
 
     try {
-        const projects = addNewProject(project)
-        res.status(200).json({projects})
+        const { db } = await connectToDatabase()
+        db.collection<IProject>('projects').insertOne(project)
+
+        res.status(200).end()
 
     } catch(err) {
-        res.status(400).send({error: err as Error})
+        res.status(500).json({ error: err as Error })
     }
 }
 

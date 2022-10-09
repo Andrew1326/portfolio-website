@@ -1,9 +1,0 @@
-{
-    "projects": [
-        {"_id":{"$oid":"632cb880d5778a01d7e853ef"},"title":"Notes","desc":"App for creating, editing, deleting notes. It includes simple notes and day planning","technologies":["JavaScript","CSS","HTML"],"appUrl":"https://notes-eec48.web.app/","githubUrl":"https://github.com/Andrew1326/my-notes"},
-        {"_id":{"$oid":"632cb880d5778a01d7e853f0"},"title":"Weather","desc":"App for detecting current forecast","technologies":["JavaScript","CSS","HTML"],"appUrl":"https://weather-f8848.web.app/","githubUrl":"https://github.com/Andrew1326/weather"},
-        {"_id":{"$oid":"632cb880d5778a01d7e853f1"},"title":"Foody","desc":"App for searching, saving, cooking food","technologies":["TypeScript","CSS","HTML"],"appUrl":"https://meals-6ae2e.web.app","githubUrl":"https://github.com/Andrew1326/food"},
-        {"_id":{"$oid":"632cb880d5778a01d7e853f2"},"title":"Moovie","desc":"App for searching movies, TVs. It also includes saving option","technologies":["TypeScript","CSS","HTML"],"appUrl":"https://movies-bf95f.web.app","githubUrl":"https://github.com/Andrew1326/movies"},
-        {"_id":{"$oid":"632cb880d5778a01d7e853f3"},"title":"CoinsPlace","desc":"App for detecting cryptocurrencies prices changes and news. It also includes filter for sorting news","technologies":["JavaScript","CSS","HTML"],"appUrl":"https://cryptocurrency-d5bdc.web.app","githubUrl":"https://github.com/Andrew1326/cryptocurrency"}
-    ]
-}

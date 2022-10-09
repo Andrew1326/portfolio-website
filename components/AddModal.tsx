@@ -1,5 +1,7 @@
 import { Button, Group, Modal, Stack, Textarea, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
+import { ObjectId } from "bson";
+import { WithId } from "mongodb";
 import { Dispatch, SetStateAction } from "react"
 import { IProject } from "../appTypes";
 import useProjectsStore from "../stores/projectsStore";
@@ -9,9 +11,10 @@ interface IFormValues extends Omit<IProject, 'technologies'> { technologies: str
 type TProps = {
     isOpen: boolean,
     setIsOpen: Dispatch<SetStateAction<boolean>>
+    setProjectsUpdateNeeded: (value: SetStateAction<boolean>) => void
 }
 
-const AddModal = ({isOpen, setIsOpen}: TProps): JSX.Element => {
+const AddModal = ({isOpen, setIsOpen, setProjectsUpdateNeeded}: TProps): JSX.Element => {
 
     //* form store
     const addProject = useProjectsStore(state => state.addProject)
@@ -31,11 +34,15 @@ const AddModal = ({isOpen, setIsOpen}: TProps): JSX.Element => {
     })
 
     //* submit
-    const submit = (values: IFormValues): void => {
-        addProject({
+    const submit = async (values: IFormValues): Promise<void> => {
+        const project: WithId<IProject> = {
             ...values,
-            technologies: values.technologies.split(', ')
-        })
+            technologies: values.technologies.split(','),
+            _id: new ObjectId()
+        }
+
+        const resStatus = await addProject(project)
+        if (resStatus && resStatus < 300) setProjectsUpdateNeeded(true)
 
         form.reset()
         setIsOpen(false)

@@ -1,19 +1,22 @@
+import { WithId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
-import { IProject } from '../../appTypes'
-import { getProjects as loadProjects } from '../../helpers/projects'
+import { IProject } from "../../appTypes";
+import { connectToDatabase } from "../../data/db";
 
-interface IResponseData {
-    projects?: IProject[];
-    error?: Error;
+export type TRes = {
+    projects?: WithId<IProject>[],
+    error?: Error
 }
 
-const getProjects = (req: NextApiRequest, res: NextApiResponse<IResponseData>): void => {
+const getProjects = async (req: NextApiRequest, res: NextApiResponse<TRes>): Promise<void> => {
     try {
-        const projects = loadProjects()
-        res.status(200).json({projects})
+        const { db } = await connectToDatabase()
+        const projects = await db.collection<IProject>('projects').find({}).toArray()
+
+        res.status(500).json({ projects })
 
     } catch(err) {
-        res.status(400).send({error: err as Error})
+        res.status(500).json({ error: err as Error })
     }
 }
 

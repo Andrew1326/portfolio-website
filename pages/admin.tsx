@@ -39,7 +39,7 @@ const Login: NextPage = (): JSX.Element => {
             <Head>
                 <title>Admin</title>
             </Head>
-            <Center data-aos='fade-up'>
+            <Center>
                 <Title order={3} className={globalClasses.h3}>Admin login</Title>
             </Center>
             <Box sx={{ maxWidth: 500 }} mx="auto">

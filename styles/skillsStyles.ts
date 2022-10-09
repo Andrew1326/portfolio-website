@@ -1,7 +1,6 @@
 import { createStyles } from "@mantine/core";
 
-
-export const useStyles = createStyles(theme => ({
+export const useStyles = createStyles({
     technologies_container: {
         display: 'flex',
         justifyContent: 'space-around',
@@ -26,4 +25,4 @@ export const useStyles = createStyles(theme => ({
         alignItems: 'center',
         flexWrap: 'wrap'
     }
-}))
+})

@@ -1,25 +1,23 @@
+import { ObjectId, WithId } from "mongodb";
 import create from "zustand";
 import { IProject } from "../appTypes";
-import { IData as IProjectsData } from '../helpers/projects'
+import { TRes as IGetProjectsRes } from "../pages/api/getProjects"
 
-export interface IUpdateProjectData {
-    id: number, 
-    updatedProject: IProject
-}
+type TPromiseWithStatus = Promise<number | null>
 
 interface IState {
-    projects: IProject[] | null,
+    projects: WithId<IProject>[] | null,
     loading: boolean,
     error: Error | null,
-    selectedProjectId: number | null,
-    selectProject: (id: number) => void,
+    selectedProjectId: ObjectId | null,
+    selectProject: (_id: ObjectId) => void,
     getProjects: () => Promise<void>,
-    addProject: (project: IProject) => Promise<void>,
-    deleteProject: (id: number) => Promise<void>,
-    editProject: (projectData: IUpdateProjectData) => Promise<void>
+    addProject: (project: WithId<IProject>) => TPromiseWithStatus,
+    deleteProject: (_id: ObjectId) => TPromiseWithStatus,
+    updateProject: (updatedFields: Partial<IProject>, _id: ObjectId) => TPromiseWithStatus
 }
 
-const useProjectsStore = create<IState>()((set, get) => ({
+const useProjectsStore = create<IState>()((set) => ({
         projects: null,
         loading: false,
         error: null,
@@ -28,86 +26,95 @@ const useProjectsStore = create<IState>()((set, get) => ({
         //* get projects
         getProjects: async () => {
             try {
-                set({loading: true})
+                set({ loading: true })
 
-                const res = await fetch('/api/getProjects', { method: 'POST' })
-                const data: IProjectsData = await res.json()
+                const res = await fetch('/api/getProjects')
+                const data: IGetProjectsRes = await res.json()
 
                 set(data)
 
             } catch(err) {
-                set({error: err as Error})
+                set({ error: err as Error })
 
             } finally {
-                set({loading: false})
+                set({ loading: false })
             }
         },
 
         //* add project
         addProject: async (project) => {
-            try {
-                set({loading: true})
+            let resStatus: number | null = null
 
-                const res = await fetch('/api/deleteProject', {
+            try {
+                set({ loading: true })
+
+                const res = await fetch('/api/addProject', {
                     body: JSON.stringify(project),
                     method: 'POST'
                 })
-                const data: IProjectsData = await res.json()
 
-                set(data)
+                resStatus = res.status
 
             } catch(err) {
-                set({error: err as Error})
+                set({ error: err as Error })
                 
             } finally {
-                set({loading: false})
-            }   
+                set({ loading: false })
+            }  
+            
+            return resStatus
         },
 
         //* delete project
-        deleteProject: async (id) => {
+        deleteProject: async (_id) => {
+            let resStatus: number | null = null
+
             try {
-                set({loading: true})
+                set({ loading: true })
 
                 const res = await fetch('/api/deleteProject', {
-                    body: JSON.stringify({id}),
+                    body: JSON.stringify({ _id }),
                     method: 'POST'
                 })
-                const data: IProjectsData = await res.json()
 
-                set(data)
+                resStatus = res.status
 
             } catch(err) {
-                set({error: err as Error})
+                set({ error: err as Error })
                 
             } finally {
-                set({loading: false})
+                set({ loading: false })
             }   
+
+            return resStatus
         },
 
         //* edit project
-        editProject: async (projectData) => {
-            try {
-                set({loading: true})
+        updateProject: async (updatedFields, _id) => {
+            let resStatus: number | null = null
 
-                const res = await fetch('/api/editProject', {
-                    body: JSON.stringify(projectData),
+            try {
+                set({ loading: true })
+
+                const res = await fetch('/api/updateProject', {
+                    body: JSON.stringify({ updatedFields, _id }),
                     method: 'POST'
                 })
-                const data: IProjectsData = await res.json()
 
-                set(data)
+                resStatus = res.status
 
             } catch(err) {
-                set({error: err as Error})
+                set({ error: err as Error })
                 
             } finally {
-                set({loading: false})
+                set({ loading: false })
             }
+
+            return resStatus
         },
 
         //* select project
-        selectProject: (id) => set({selectedProjectId: id})
+        selectProject: (id) => set({ selectedProjectId: id })
     })
 )
 
