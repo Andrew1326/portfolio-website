@@ -20,13 +20,8 @@ export const connectToDatabase = async (): Promise<IDbData> => {
         db: cachedDb
     }
 
-    const opts: MongoClientOptions = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    }
-
     //* connecting
-    const client = new MongoClient(MONGO_URI, opts)
+    const client = new MongoClient(MONGO_URI)
     await client.connect()
     const db = client.db(DB_NAME)
 
