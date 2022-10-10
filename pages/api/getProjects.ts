@@ -13,7 +13,7 @@ const getProjects = async (req: NextApiRequest, res: NextApiResponse<TRes>): Pro
         const { db } = await connectToDatabase()
         const projects = await db.collection<IProject>('projects').find({}).toArray()
 
-        res.status(500).json({ projects })
+        res.status(200).json({ projects })
 
     } catch(err) {
         res.status(500).json({ error: err as Error })
