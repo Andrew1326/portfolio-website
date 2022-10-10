@@ -74,7 +74,7 @@ const Projects: NextPage = (): JSX.Element => {
                     </Box>
                     :
                     error && <Box className={classes.centered_elem}>
-                        <ErrorAlert error={{name: 'Name', message: 'some message'}} />
+                        <ErrorAlert error={error} />
                     </Box>
                 }
             </Box>
