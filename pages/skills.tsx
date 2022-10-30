@@ -1,5 +1,5 @@
 import { Center, Box, Title } from "@mantine/core";
-import { GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useStyles } from "../styles/skillsStyles";
 import { gradients, IGradient, useGlobalStyles } from "../styles/globalStyles";
 import Head from "next/head";
@@ -81,8 +81,8 @@ const Skills: NextPage<TProps> = ({ technicalSkills, softSkills, technicalSkills
     )
 }
 
-//* static props
-export const getStaticProps: GetStaticProps<TProps> = async () => {
+//* server side props
+export const getServerSideProps: GetServerSideProps<TProps> = async () => {
     const technicalSkillsPromise = getContentGroup<TechnicalSkillFields>(groupsIds.TechnicalSkill)
     const softSkillsPromise = getContentGroup<SoftSkillFields>(groupsIds.SoftSkill)
 

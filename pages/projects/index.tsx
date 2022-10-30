@@ -1,12 +1,12 @@
 import { Title, Box, Center } from "@mantine/core";
-import { GetStaticProps, NextPage } from "next";
-import { useGlobalStyles } from "../styles/globalStyles";
-import { useStyles } from "../styles/projectsStyles";
+import { GetServerSideProps, NextPage } from "next";
+import { useGlobalStyles } from "../../styles/globalStyles";
+import { useStyles } from "../../styles/projectsStyles";
 import Head from "next/head";
-import ProjectCard from "../components/ProjectCard";
-import ErrorAlert from '../components/ErrorAlert'
-import { ProjectFields } from "../helpers/contentful/types";
-import { getContentGroup, groupsIds } from "../helpers/contentful/index";
+import ProjectCard from "../../components/ProjectCard";
+import ErrorAlert from '../../components/ErrorAlert'
+import { ProjectFields } from "../../helpers/contentful/types";
+import { getContentGroup, groupsIds } from "../../helpers/contentful/index";
 
 type TProps = { 
     projects?: ProjectFields[],
@@ -39,8 +39,8 @@ const Projects: NextPage<TProps> = ({ projects, error }) => {
     )
 }
 
-//* static props
-export const getStaticProps: GetStaticProps<TProps> = async () => {
+//* server side props
+export const getServerSideProps: GetServerSideProps<TProps> = async () => {
     const projects = await getContentGroup<ProjectFields>(groupsIds.Project)
 
     if (projects) return {

@@ -27,7 +27,8 @@ const Education: NextPage<TProps> = ({ education, error }) => {
     )
 }
 
-export const getStaticProps: GetStaticProps<TProps> = async () => {
+//* server side props
+export const getServerSideProps: GetStaticProps<TProps> = async () => {
     const education = await getContentGroup<EducationFields>(groupsIds.EducationCard)
 
     if (education) return {
