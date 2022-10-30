@@ -1,63 +1,129 @@
-import { Center, Container, Box, Title } from "@mantine/core";
-import { NextPage } from "next";
-import htmlSrc from '/public/html5.png'
-import cssSrc from '/public/css3.png'
-import jsSrc from '/public/js.png'
-import tsSrc from '/public/ts.png'
-import reactSrc from '/public/react.png'
-import nextSrc from '/public/next.png'
-import gitSrc from '/public/git.png'
-import githubSrc from '/public/github.png'
+import { Center, Box, Title } from "@mantine/core";
+import { GetStaticProps, NextPage } from "next";
 import { useStyles } from "../styles/skillsStyles";
-import { useGlobalStyles } from "../styles/globalStyles";
-import { ITechnology } from "../appTypes";
+import { gradients, IGradient, useGlobalStyles } from "../styles/globalStyles";
 import Head from "next/head";
 import Technology from "../components/Technology";
 import SoftSkill from "../components/SoftSkill";
+import { SoftSkillFields, TechnicalSkillFields } from "../helpers/contentful/types";
+import { getContentGroup, groupsIds } from "../helpers/contentful";
+import ErrorAlert from "../components/ErrorAlert";
 
-const HardSkills: NextPage = (): JSX.Element => {
+export interface ISoftSkillsWithGradient {
+    gradient: IGradient; 
+    name: string; 
+    id: string; 
+    groupId: string;
+}
+
+type TProps = {
+    technicalSkills?: TechnicalSkillFields[],
+    softSkills?: SoftSkillFields[],
+    technicalSkillsError?: Error,
+    softSkillsError?: Error
+}
+
+const Skills: NextPage<TProps> = ({ technicalSkills, softSkills, technicalSkillsError, softSkillsError }): JSX.Element => {
 
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
 
-    //* technologies
-    const technologies: ITechnology[] = [
-        {name: 'HTML5', src: htmlSrc, duration: 500},
-        {name: 'CSS3', src: cssSrc, duration: 700},
-        {name: 'JavaScript', src: jsSrc, duration: 900},
-        {name: 'TypeSript', src: tsSrc, duration: 1100},
-        {name: 'React', src: reactSrc, duration: 1300},
-        {name: 'Next', src: nextSrc, duration: 1500},
-        {name: 'Git', src: gitSrc, duration: 1700},
-        {name: 'GitHub', src: githubSrc, duration: 1900}
-    ]
+    //* create soft skills gradients
+    const createSoftSkillsGradients = (softSkills: SoftSkillFields[]): ISoftSkillsWithGradient[] => {
+        let createdGradients: IGradient[]
 
-    //* skills
-    const softSkills: string[] = ['creativity and willingness to learn', 'good communication', 'problem-solving', 'critical thinking', 'capacity to work under pressure', 'adaptability', 'self-teaching']
+        if (softSkills.length < gradients.length) createdGradients = gradients.slice(0, softSkills.length)
+
+        else {
+            for (let i = 0; gradients.length !== softSkills.length; i++) {
+                gradients.push(gradients[i])
+                if (i === gradients.length-1 && gradients.length !== softSkills.length) i = 0
+            }
+
+            createdGradients = gradients
+        }
+
+        const withGradients = softSkills.map((el, i) => ({ ...el, gradient: gradients[i] }))
+
+        return withGradients
+    }
 
     return (
-        <Container fluid>
+        <>
             <Head>
                 <title>Skills</title>
             </Head>
             <Center>
-                <Title className={globalClasses.h2}>Most important technical skills</Title>
+                <Title className={globalClasses.h2}>Technical skills</Title>
             </Center>
-            <Box className={classes.technologies_container}>
+            {
+                technicalSkills ? <Box className={classes.technologies_container}>
                 {
-                    technologies.map((el, i) => <Technology technology={el} key={i} />)
+                    technicalSkills.map((el, i) => <Technology key={el.id} technology={el} index={i} />)
                 }
             </Box>
+            :
+            technicalSkillsError && <ErrorAlert error={technicalSkillsError} />
+            }
             <Center>
                 <Title sx={{ marginTop: '3%' }} className={globalClasses.h2}>Soft skills</Title>
             </Center>
-            <Box className={classes.soft_skills_container}>
+            {
+                softSkills ? <Box className={classes.soft_skills_container}>
                 {
-                    softSkills.map((el, i) => <SoftSkill softSkill={el} index={i} key={i} />)
+                    createSoftSkillsGradients(softSkills).map(el => <SoftSkill key={el.id} softSkill={el} />)
                 }
             </Box>
-        </Container>
+            :
+            softSkillsError && <ErrorAlert error={softSkillsError} />
+            }
+        </>
     )
 }
 
-export default HardSkills
+//* static props
+export const getStaticProps: GetStaticProps<TProps> = async () => {
+    const technicalSkillsPromise = getContentGroup<TechnicalSkillFields>(groupsIds.TechnicalSkill)
+    const softSkillsPromise = getContentGroup<SoftSkillFields>(groupsIds.SoftSkill)
+
+    const [technicalSkills, softSkills] = await Promise.all([technicalSkillsPromise, softSkillsPromise])
+
+    if (technicalSkills && softSkills) return {
+        props: { technicalSkills, softSkills }
+    }
+
+    else if (technicalSkills && !softSkills) return {
+        props: {
+            technicalSkills,
+            softSkillsError: {
+                name: 'Data loading error',
+                message: 'Failed to load softSkills' 
+            }
+        }
+    }
+
+    else if (!technicalSkills && softSkills) return {
+        props: {
+            softSkills,
+            technicalSkillsError: {
+                name: 'Data loading error',
+                message: 'Failed to load technicalSkills'
+            }
+        }
+    }
+
+    else return {
+        props: {
+            softSkillsError: {
+                name: 'Data loading error',
+                message: 'Failed to load softSkills' 
+            },
+            technicalSkillsError: {
+                name: 'Data loading error',
+                message: 'Failed to load technicalSkills'
+            }
+        }
+    }
+}
+
+export default Skills

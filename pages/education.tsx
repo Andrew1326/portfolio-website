@@ -1,34 +1,47 @@
-import { NextPage } from "next";
-import { Box, Container } from "@mantine/core";
-import localcodingSrc from '/public/localcoding.png'
-import codewarsSrc from '/public/codewars.png'
-import { IImage } from "../appTypes";
-import Image from "next/image";
-import { useStyles } from "../styles/educationStyles";
+import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
+import { EducationFields } from "../helpers/contentful/types";
+import EducationCard from "../components/EducationCard";
+import ErrorAlert from "../components/ErrorAlert";
+import { getContentGroup, groupsIds } from "../helpers/contentful";
 
-const Education: NextPage = (): JSX.Element => {
+type TProps = { 
+    education?: EducationFields[],
+    error?: Error
+}
 
-    const { classes } = useStyles()
-
-    //* images
-    const images: IImage[] = [
-        {src: localcodingSrc, alt: 'localcoding'},
-        {src: codewarsSrc, alt: 'codewars'}
-    ]
-
+const Education: NextPage<TProps> = ({ education, error }) => {
     return (
-        <Container fluid>
+        <>
             <Head>
                 <title>Education</title>
             </Head>
-            <Box className={classes.images_container}>
+            <main>
             {
-                images.map((el, i) => <Image key={i} src={el.src} alt={el.alt} />)
+                education ? education.map((el, i) => <EducationCard key={el.id} fields={el} index={i} />)
+                :
+                error && <ErrorAlert error={error} />
             }
-            </Box>
-        </Container>
+            </main>
+        </>
     )
+}
+
+export const getStaticProps: GetStaticProps<TProps> = async () => {
+    const education = await getContentGroup<EducationFields>(groupsIds.EducationCard)
+
+    if (education) return {
+        props: { education }
+    }
+
+    else return {
+        props: {
+            error: { 
+                name: 'Data loading error', 
+                message: 'Failed to load education' 
+            }
+        }
+    }
 }
 
 export default Education

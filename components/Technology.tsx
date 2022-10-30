@@ -1,29 +1,27 @@
-import { Box, Text } from '@mantine/core'
-import { ITechnology } from "../appTypes";
-import Image from 'next/image'
+import { Box, Text, Image } from '@mantine/core'
 import { useGlobalStyles } from '../styles/globalStyles';
 import { useStyles } from '../styles/technologyStyles'
-import { useMediaQuery } from '@mantine/hooks';
 import useSearch from '../hooks/useSearch';
+import { TechnicalSkillFields } from '../helpers/contentful/types';
 
-type TProps = { technology: ITechnology }
+type TProps = { 
+    technology: TechnicalSkillFields,
+    index: number
+}
 
-const Technology = ({technology}: TProps): JSX.Element => {
+const Technology = ({ technology, index }: TProps): JSX.Element => {
 
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
+
+    //* animations durations
+    const durations: number[] = [500, 700, 900, 1100, 1300, 1500, 1700, 1900]
     
     const search = useSearch()
 
-    //* media queries
-    const largerThan320 = useMediaQuery('(min-width: 320px)')
-    const largerThan769 = useMediaQuery('(min-width: 769px)')
-
-    const imageSize = (largerThan320 && !largerThan769) ? '80px' : '115px'
-
     return (
-        <Box data-aos='fade-down-right' data-aos-duration={technology.duration} className={classes.technology} onClick={() => search(technology.name)}>
-            <Image src={technology.src} alt={technology.name} width={imageSize} height={imageSize} />
+        <Box data-aos='fade-down-right' data-aos-duration={durations[index]} className={classes.technology} onClick={() => search(technology.name)}>
+            <Image className={classes.technology_img} src={`https:${technology.image.fields.file.url}`} alt={technology.name} />
             <Text className={globalClasses.text} sx={{ textAlign: 'center' }}>{technology.name}</Text>
         </Box>
     )

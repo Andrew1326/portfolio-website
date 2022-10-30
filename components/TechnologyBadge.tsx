@@ -3,7 +3,7 @@ import useSearch from "../hooks/useSearch"
 
 type TProps = { technology: string }
 
-const TechnologyBadge = ({technology}: TProps): JSX.Element => {
+const TechnologyBadge = ({ technology }: TProps): JSX.Element => {
 
     const search = useSearch()
 

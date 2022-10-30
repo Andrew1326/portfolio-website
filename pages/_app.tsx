@@ -26,26 +26,25 @@ export default function App({ Component, pageProps }: AppProps) {
       easing: "ease-out-cubic",
       once: true,
       offset: 50,
-    });
-  }, []);
+    })
+  }, [])
 
    //* color scheme
    const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
-    defaultValue: 'dark',
-    getInitialValueInEffect: true,
-  });
+    defaultValue: 'dark'
+  })
 
   //* toggle scheme
   const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
-  //* color theme
-  const colorTheme = {
+  //* mantine theme
+  const mantineTheme = {
     colorScheme,
     fontFamily: 'Archivo, sans-serif',
     fontFamilyMonospace: 'Monaco, Courier, monospace',
     headings: { fontFamily: 'sans-serif' },
-    black: theme.colors.gray[theme.colorScheme === 'light' ? 7 : 9]
+    black: theme.colors.gray[theme.colorScheme === 'light' ? 6 : 9]
   }
 
   //* props
@@ -61,7 +60,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="description" content="My portfolio" />
       </Head>
       {
-        showChild && <MantineProvider theme={colorTheme} withGlobalStyles withNormalizeCSS>
+        showChild && <MantineProvider theme={mantineTheme} withGlobalStyles withNormalizeCSS>
         <Fonts />
         <AppShell header={<Header {...headerProps} />}>
           <Component {...pageProps} />

@@ -1,37 +1,48 @@
-import { NextPage } from "next";
-import { Box } from '@mantine/core'
+import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import AboutSection from "../components/AboutSection";
+import { SectionFields } from "../helpers/contentful/types";
+import ErrorAlert from "../components/ErrorAlert";
+import { getContentGroup, groupsIds } from "../helpers/contentful";
 
-export interface ISection {
-    title: string;
-    text: string;
+type TProps = {
+    sections?: SectionFields[],
+    error?: Error
 }
 
-const About: NextPage = (): JSX.Element => {
-
-    //* sections
-    const sections: ISection[] = [
-        {
-            title: 'Little about me',
-            text: 'I&apos;m frontend developer with big experience. My english level is B1. I have experience in working on real commercial projects. While working i also use modern technologies. I like creating websites, because it&apos;s ability to apply something new. I have big experience with frontend technologies.'
-        },
-        {
-            title: 'About choice',
-            text: 'When i hadn&apos;t knowledge in programming i had big question: &quot;What direction i should choose?&quot; - it&apos;s most difficult question when your are starting something new. I was watching videos about many directions and i have stopped in frontend. I decided to start learning this. I was learning many technologies on PASV courses. On my mind, it&apos;s good courses, because we practiced a lot on real projects. After this courses i had good knowledge of html, css, js + frameworks and libraries. When you&apos;re frontend developer, you can create coloured, interactive websites and apps, i think it&apos;s very cool.'
-        }
-    ]
-
+const About: NextPage<TProps> = ({ sections, error }): JSX.Element => {
     return (
-        <Box>
+        <>
             <Head>
                 <title>About</title>
             </Head>
+            <main>
             {
-                sections.map((el, i) => <AboutSection key={i} {...el} />)
+                sections ? sections.map((el, i) => <AboutSection key={el.id} title={el.title} desc={el.description.content[0].content[0].value} />)
+                :
+                error && <ErrorAlert error={error} />
             }
-        </Box>
+            </main>
+        </>
     )
+}
+
+//* static props
+export const getStaticProps: GetStaticProps<TProps> = async () => {
+    const sections = await getContentGroup<SectionFields>(groupsIds.Section)
+
+    if (sections) return {
+        props: { sections }
+    }
+    
+    else return {
+        props: {
+            error: { 
+                name: 'Data loading error', 
+                message: 'Failed to load sections' 
+            }
+        }
+    }
 }
 
 export default About

@@ -1,30 +1,24 @@
 import { NextPage } from 'next'
-import { Container, Title, Center, Box, Code, Button } from '@mantine/core'
+import { Title, Center, Box, Code, Button } from '@mantine/core'
 import { useStyles } from '../styles/indexStyles'
 import { logo } from '../constants'
 import { useGlobalStyles } from '../styles/globalStyles'
 import Head from 'next/head'
 import { useMediaQuery } from "@mantine/hooks"
-import { useRouter } from 'next/router'
-import { MouseEventHandler } from 'react'
 
-const Home: NextPage = (): JSX.Element => {
+const Home: NextPage = () => {
 
   const { classes: globalClasses } = useGlobalStyles()
   const { classes } = useStyles()
 
   const smallerThan481 = useMediaQuery('(max-width: 480px)')
 
-  const router = useRouter()
-
-  //* start exploring
-  const startExploring: MouseEventHandler<HTMLButtonElement> = () => router.push('/about')
-
   return (
-    <Container fluid>
+    <>
       <Head>
         <title>Portfolio</title>
       </Head>
+      <main>
       <Center data-aos='fade-up' data-aos-duration='1200'>
           <Title order={1} className={globalClasses.h1}>My name is Andrew and i&apos;m frontend developer</Title>
       </Center>
@@ -40,10 +34,11 @@ const Home: NextPage = (): JSX.Element => {
       </Box>
       {
         smallerThan481 && <Center>
-          <Button size='md' mt='15%' color='blue' onClick={startExploring}>start exploring</Button>
+          <Button size='md' mt='15%' color='blue' href='/about' component='a'>start exploring</Button>
       </Center>
       }
-    </Container>
+      </main>
+    </>
   )
 }
 

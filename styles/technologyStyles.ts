@@ -6,7 +6,29 @@ export const useStyles = createStyles({
 
         '&:hover': { 
             cursor: 'pointer',
-            color: '#4295df' 
+            color: '#4295df'
         }
+    },
+
+    technology_img: {
+        '@media (min-width: 320px)': {
+            width: '50px',
+            height: '50px'
+        },
+
+        '@media (min-width: 481px)': {
+            width: '70px',
+            height: '70px'
+        },
+
+        '@media (min-width: 769px)': {
+            width: '90px',
+            height: '90px'
+        },
+
+        '@media (min-width: 1025px)': {
+            width: '110px',
+            height: '110px'
+        },
     }
 })

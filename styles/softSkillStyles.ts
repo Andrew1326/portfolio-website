@@ -1,8 +1,9 @@
 import { createStyles } from "@mantine/core";
+import { IGradient } from "./globalStyles";
 
-export const useStyles = createStyles(theme => ({
+export const useStyles = createStyles((theme, { gradient }: { gradient: IGradient }) => ({
     soft_skill: {
-        background: 'linear-gradient(#457fca, #5691c8)',
+        backgroundImage: theme.fn.linearGradient(gradient.deg, gradient.from, gradient.to),
         color: theme.colors.gray[2],
         height: 'auto',
         textAlign: 'center',

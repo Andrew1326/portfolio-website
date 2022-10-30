@@ -1,4 +1,5 @@
 import { Global } from '@mantine/core';
+
 export function Fonts() {
   return (
     <Global

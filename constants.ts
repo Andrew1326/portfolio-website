@@ -1,1 +1,1 @@
-export const logo = `<Frontend dev />`
+export const logo = `<WebDeveloper />`

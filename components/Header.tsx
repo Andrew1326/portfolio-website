@@ -1,18 +1,22 @@
 import { ActionIcon, ColorScheme, Box, Header as MHeader, Text, Code, Menu } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
-import { NextLink } from "@mantine/next"
 import { Moon, Sun } from "tabler-icons-react"
 import { logo } from '../constants'
 import { useStyles } from '../styles/headerStyles'
-import { ILink } from '../appTypes'
 import { useGlobalStyles } from "../styles/globalStyles"
+
+interface ILink {
+    href: string;
+    text: string;
+    show: boolean
+}
 
 type TProps = { 
     colorScheme: ColorScheme,
     toggleColorScheme: () => void
  }
 
-const Header = ({colorScheme, toggleColorScheme}: TProps): JSX.Element => {
+const Header = ({ colorScheme, toggleColorScheme }: TProps): JSX.Element => {
 
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
@@ -40,7 +44,7 @@ const Header = ({colorScheme, toggleColorScheme}: TProps): JSX.Element => {
                 smallerThan481 ? <Menu trigger="hover" delay={200} className={classes.menu}>
                     <Menu.Label>Pages:</Menu.Label>
                     {
-                        links.map((el, i) => !el.show && <Menu.Item key={i} component={NextLink} href={el.href}>{el.text}</Menu.Item>)
+                        links.map((el, i) => !el.show && <Menu.Item key={i} href={el.href} component='a'>{el.text}</Menu.Item>)
                     }
                 </Menu>
                 :
@@ -52,7 +56,7 @@ const Header = ({colorScheme, toggleColorScheme}: TProps): JSX.Element => {
                     links.map((el, i) => el.show && <Text key={i} className={classes.link} variant="link" component="a" href={el.href}>{el.text}</Text>)
                 }
             </Box>
-                <ActionIcon className={globalClasses.action_icon} sx={{ width: '50px', height: '50px' }} onClick={() =>  toggleColorScheme()}>
+                <ActionIcon className={globalClasses.action_icon} sx={{ width: '50px', height: '50px' }} onClick={() => toggleColorScheme()}>
                 {
                     dark ? <Sun size={22} /> : <Moon size={22} />
                 }
