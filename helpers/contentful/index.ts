@@ -1,5 +1,5 @@
 import * as contentful from 'contentful'
-import { Entry } from './types'
+import { Entry, Fields } from './types'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_ACCESS_TOKEN } = process.env
 
@@ -30,7 +30,7 @@ export enum groupsIds {
 }
 
 //* get content
-export const getContentGroup = async <T>(groupId: groupsIds): Promise<T[] | undefined> => {
+export const getContentGroup = async <T extends Fields>(groupId: groupsIds): Promise<T[] | undefined> => {
 
     const items = await getCmsData()
 
@@ -47,7 +47,7 @@ export const getContentGroup = async <T>(groupId: groupsIds): Promise<T[] | unde
 }
 
 //* get content
-export const getContent = async <T>(id: string): Promise<T & { id: string; } | undefined> => {
+export const getContent = async <T extends Fields>(id: string): Promise<T & { id: string; } | undefined> => {
 
     const item = await client.getEntry<T>(id)
 
