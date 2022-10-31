@@ -29,6 +29,7 @@ export const useStyles = createStyles(theme => ({
     menu: { ':hover': { backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 9 : 0] } },
 
     logo_container: { 
+        textDecoration: 'none',
         '&:hover': { textDecoration: 'none' }
     },
 

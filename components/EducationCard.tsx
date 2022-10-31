@@ -13,8 +13,6 @@ const EducationCard = ({ fields, index }: TProps): JSX.Element => {
     const { classes: globalClasses } = useGlobalStyles()
     const { classes } = useStyles()
 
-    console.log(fields)
-
     return (
         <Card shadow="xl" p="xs" m='sm' radius="md" withBorder>
             <Box className={classes.card_content_container}>

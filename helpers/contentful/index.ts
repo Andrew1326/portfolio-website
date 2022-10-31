@@ -3,17 +3,12 @@ import { Entry, Fields } from './types'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_ACCESS_TOKEN } = process.env
 
-let clientParams: contentful.CreateClientParams | null = null
+let clientParams: contentful.CreateClientParams = {
+    space: CONTENTFUL_SPACE_ID as string,
+    accessToken: CONTENTFUL_ACCESS_TOKEN as string,
+}
 
-//* creating client
-if (CONTENTFUL_SPACE_ID && CONTENTFUL_ACCESS_TOKEN) {
-    clientParams = {
-        space: CONTENTFUL_SPACE_ID,
-        accessToken: CONTENTFUL_ACCESS_TOKEN,
-    }
-} else throw new Error('Declare secrets in .env')
-
-export const client = contentful.createClient(clientParams)
+const client = contentful.createClient(clientParams)
 
 //* getting data from cms
 export const getCmsData = async (): Promise<Entry[] | undefined> => {

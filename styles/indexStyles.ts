@@ -26,7 +26,7 @@ export const useStyles = createStyles(theme => ({
         animationDelay: '2s',
         animationDuration: '15s',
 
-        '&:nth-child(3)': {
+        '&:nth-of-type(3)': {
             background: 'linear-gradient(to left bottom, #12c2e9, #c471ed, #f64f59)',
     
             '@media (min-width: 320px)': {
@@ -49,7 +49,7 @@ export const useStyles = createStyles(theme => ({
             '@media (min-width: 1025px)': { left: '15%' },
         },
 
-        '&:nth-child(4)': {
+        '&:nth-of-type(4)': {
             background: 'linear-gradient(to right top, #12c2e9, #c471ed, #f64f59)',
     
             '@media (min-width: 320px)': {

@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from "next";
+import { GetStaticPropsResult, NextPage } from "next";
 import Head from "next/head";
 import AboutSection from "../components/AboutSection";
 import { SectionFields } from "../helpers/contentful/types";
@@ -27,8 +27,8 @@ const About: NextPage<TProps> = ({ sections, error }): JSX.Element => {
     )
 }
 
-//* server side props
-export const getServerSideProps: GetServerSideProps<TProps> = async () => {
+//* static props
+export async function getStaticProps(): Promise<GetStaticPropsResult<TProps>> {
     const sections = await getContentGroup<SectionFields>(groupsIds.Section)
 
     if (sections) return {

@@ -4,6 +4,7 @@ import { Moon, Sun } from "tabler-icons-react"
 import { logo } from '../constants'
 import { useStyles } from '../styles/headerStyles'
 import { useGlobalStyles } from "../styles/globalStyles"
+import Link from "next/link"
 
 interface ILink {
     href: string;
@@ -44,11 +45,15 @@ const Header = ({ colorScheme, toggleColorScheme }: TProps): JSX.Element => {
                 smallerThan481 ? <Menu trigger="hover" delay={200} className={classes.menu}>
                     <Menu.Label>Pages:</Menu.Label>
                     {
-                        links.map((el, i) => !el.show && <Menu.Item key={i} href={el.href} component='a'>{el.text}</Menu.Item>)
+                        links.map((el, i) => !el.show && <Link key={i} href={el.href} passHref>
+                            <Menu.Item component='a'>{el.text}</Menu.Item>
+                        </Link>)
                     }
                 </Menu>
                 :
-                <Text variant="link" href='/' component="a" className={classes.logo_container}><Code block className={classes.logo}>{logo}</Code></Text>
+                <Link className={classes.logo_container} href='/' passHref>
+                    <Code block className={classes.logo}>{logo}</Code>
+                </Link>
             }
             </Box>
             <Box className={classes.links_container}>
