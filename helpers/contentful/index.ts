@@ -1,11 +1,9 @@
 import * as contentful from 'contentful'
 import { Entry, Fields } from './types'
 
-const { CONTENTFUL_SPACE_ID, CONTENTFUL_ACCESS_TOKEN } = process.env
-
 let clientParams: contentful.CreateClientParams = {
-    space: CONTENTFUL_SPACE_ID as string,
-    accessToken: CONTENTFUL_ACCESS_TOKEN as string,
+    space: process.env.CONTENTFUL_SPACE_ID as string,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
 }
 
 const client = contentful.createClient(clientParams)

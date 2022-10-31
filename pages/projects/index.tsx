@@ -1,5 +1,5 @@
 import { Title, Box, Center } from "@mantine/core";
-import { GetStaticPropsResult, NextPage } from "next";
+import { GetServerSidePropsResult, NextPage } from "next";
 import { useGlobalStyles } from "../../styles/globalStyles";
 import { useStyles } from "../../styles/projectsStyles";
 import Head from "next/head";
@@ -39,8 +39,8 @@ const Projects: NextPage<TProps> = ({ projects, error }) => {
     )
 }
 
-//* static props
-export async function getStaticProps(): Promise<GetStaticPropsResult<TProps>> {
+//* server side props
+export async function getServerSideProps(): Promise<GetServerSidePropsResult<TProps>> {
     const projects = await getContentGroup<ProjectFields>(groupsIds.Project)
 
     if (projects) return {

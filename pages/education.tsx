@@ -1,4 +1,4 @@
-import { GetStaticPropsResult, NextPage } from "next";
+import { GetServerSidePropsResult, NextPage } from "next";
 import Head from "next/head";
 import { EducationFields } from "../helpers/contentful/types";
 import EducationCard from "../components/EducationCard";
@@ -27,8 +27,8 @@ const Education: NextPage<TProps> = ({ education, error }) => {
     )
 }
 
-//* static props
-export async function getStaticProps(): Promise<GetStaticPropsResult<TProps>> {
+//* server side props
+export async function getServerSideProps(): Promise<GetServerSidePropsResult<TProps>> {
     const education = await getContentGroup<EducationFields>(groupsIds.EducationCard)
 
     if (education) return {

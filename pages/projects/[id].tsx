@@ -1,12 +1,12 @@
 import { Box, Title, Text, Button, Image } from "@mantine/core";
-import { NextPage, GetStaticPropsResult } from "next";
+import { NextPage, GetServerSidePropsResult } from "next";
 import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
 import { useStyles } from '../../styles/projectStyles'
 import { useGlobalStyles } from "../../styles/globalStyles";
 import ErrorAlert from "../../components/ErrorAlert";
 import BackBtn from "../../components/BackBtn";
-import { getContent, getContentGroup, groupsIds } from "../../helpers/contentful";
+import { getContent } from "../../helpers/contentful";
 import { ProjectFields, Image as CImage } from "../../helpers/contentful/types";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
@@ -17,13 +17,6 @@ interface IImage {
 }
 
 interface IParams extends ParsedUrlQuery { [index: string]: string }
-
-interface IPath { params: IParams }
-
-type TGetStaticPathsRes = {
-    paths: IPath[],
-    fallback: false | true | 'blocking'
-}
 
 type TProps = { 
     project?: ProjectFields,
@@ -74,22 +67,8 @@ const Project: NextPage<TProps> = ({ project, error }) => {
     )
 }
 
-//* static paths
-export async function getStaticPaths(): Promise<TGetStaticPathsRes | undefined> {
-    const projects = await getContentGroup<ProjectFields>(groupsIds.Project)
-    
-    if (projects) {
-        const paths: IPath[] = projects.map(el => ({ params: { id: el.id } }))
-        
-        return {
-            paths,
-            fallback: false
-        }
-    }
-}
-
-//* static props
-export async function getStaticProps(context: { params: IParams; }): Promise<GetStaticPropsResult<TProps>> {
+//* server side props
+export async function getServerSideProps(context: { params: IParams; }): Promise<GetServerSidePropsResult<TProps>> {
     const { id } = context.params as IParams
     const project = await getContent<ProjectFields>(id)
 
