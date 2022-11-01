@@ -1,7 +1,6 @@
-import { ActionIcon, ColorScheme, Box, Header as MHeader, Text, Code, Menu } from "@mantine/core"
+import { ActionIcon, ColorScheme, Box, Header as MHeader, Text, Menu } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
 import { Moon, Sun } from "tabler-icons-react"
-import { logo } from '../constants'
 import { useStyles } from '../styles/headerStyles'
 import { useGlobalStyles } from "../styles/globalStyles"
 import Link from "next/link"
@@ -23,8 +22,8 @@ const Header = ({ colorScheme, toggleColorScheme }: TProps): JSX.Element => {
     const { classes } = useStyles()
 
     //* media queries
-    const smallerThan481 = useMediaQuery('(max-width: 480px)')
     const smallerThan380 = useMediaQuery('(max-width: 380px)')
+    const smallerThan481 = useMediaQuery('(max-width: 480px)')
 
     //* links
     const links: ILink[] = [
@@ -34,8 +33,18 @@ const Header = ({ colorScheme, toggleColorScheme }: TProps): JSX.Element => {
         {href: '/projects', text: 'Projects', show: !smallerThan481}
     ]
 
+    //* get breakpoint links
+    const getBreakPointLinks = (): ILink[] => links.filter(el => el.show)
+
+    const breakpointLinks = getBreakPointLinks()
+
     //* is dark
     const dark: boolean = colorScheme === 'dark'
+
+    //* logoLink
+    const LogoLink = (): JSX.Element => <Link className={classes.logo_container} href='/' passHref>
+        <Text size='xl' className={classes.logo}>Portfolio</Text>
+    </Link>
 
     return (
         <MHeader height={70} p="xl" className={classes.header}>
@@ -46,19 +55,17 @@ const Header = ({ colorScheme, toggleColorScheme }: TProps): JSX.Element => {
                     <Menu.Label>Pages:</Menu.Label>
                     {
                         links.map((el, i) => !el.show && <Link key={i} href={el.href} passHref>
-                            <Menu.Item component='a'>{el.text}</Menu.Item>
+                            <Menu.Item>{el.text}</Menu.Item>
                         </Link>)
                     }
                 </Menu>
                 :
-                <Link className={classes.logo_container} href='/' passHref>
-                    <Code block className={classes.logo}>{logo}</Code>
-                </Link>
+                <LogoLink />
             }
             </Box>
             <Box className={classes.links_container}>
                 {
-                    links.map((el, i) => el.show && <Text key={i} className={classes.link} variant="link" component="a" href={el.href}>{el.text}</Text>)
+                    breakpointLinks.length > 0 && breakpointLinks.map((el, i) => el.show && <Text key={i} className={classes.link} variant="link" component="a" href={el.href}>{el.text}</Text>)
                 }
             </Box>
                 <ActionIcon className={globalClasses.action_icon} sx={{ width: '50px', height: '50px' }} onClick={() => toggleColorScheme()}>

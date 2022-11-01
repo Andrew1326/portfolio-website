@@ -47,7 +47,7 @@ const Project: NextPage<TProps> = ({ project, error }) => {
                         <BackBtn />
                         <Title order={2} className={globalClasses.h2}>{project.title}</Title>
                         <Text className={globalClasses.text}>{project.description}</Text>
-                        <Carousel interval={5000} infiniteLoop emulateTouch transitionTime={600} showArrows showThumbs={false}>
+                        <Carousel className={classes.carousel} interval={5000} infiniteLoop emulateTouch transitionTime={600} showArrows showThumbs={false}>
                             {
                                 createCarouselImages(project.images).map((el, i) => <Image key={i} src={el.url} alt={el.alt} />)
                             }

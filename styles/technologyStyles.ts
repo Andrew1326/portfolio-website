@@ -2,6 +2,10 @@ import { createStyles } from "@mantine/core";
 
 export const useStyles = createStyles({
     technology: { 
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
         margin: '2%',
 
         '&:hover': { 
@@ -12,8 +16,8 @@ export const useStyles = createStyles({
 
     technology_img: {
         '@media (min-width: 320px)': {
-            width: '50px',
-            height: '50px'
+            width: '55px',
+            height: '55px'
         },
 
         '@media (min-width: 481px)': {

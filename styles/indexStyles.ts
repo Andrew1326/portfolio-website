@@ -27,14 +27,9 @@ export const useStyles = createStyles(theme => ({
         animationDuration: '15s',
 
         '&:nth-of-type(3)': {
-            background: 'linear-gradient(to left bottom, #12c2e9, #c471ed, #f64f59)',
+            background: `linear-gradient(to right top, ${theme.colorScheme === 'dark' ? '#fc466b, #3f5efb': '#fc5c7d, #6a82fb'})`,
     
-            '@media (min-width: 320px)': {
-                width: '140px',
-                height: '140px',
-                left: '0',
-                marginTop: '9%'
-            },
+            '@media (min-width: 320px)': { visibility: 'hidden' },
             '@media (min-width: 481px)': {
                 width: '250px',
                 height: '250px',
@@ -50,14 +45,9 @@ export const useStyles = createStyles(theme => ({
         },
 
         '&:nth-of-type(4)': {
-            background: 'linear-gradient(to right top, #12c2e9, #c471ed, #f64f59)',
+            background: `linear-gradient(to left bottom, ${theme.colorScheme === 'dark' ? '#fc466b, #3f5efb': '#fc5c7d, #6a82fb'})`,
     
-            '@media (min-width: 320px)': {
-                width: '90px',
-                height: '90px',
-                right: '0',
-                marginTop: '9%'
-            },
+            '@media (min-width: 320px)': { visibility: 'hidden' },
             '@media (min-width: 481px)': {
                 width: '150px',
                 height: '150px',
@@ -125,5 +115,21 @@ export const useStyles = createStyles(theme => ({
         '@media (min-width: 481px)': { fontSize: '200%' },
         '@media (min-width: 769px)': { fontSize: '250%' },
         '@media (min-width: 1025px)': { fontSize: '300%' },
+    },
+
+    start_btn: {
+        '@media (min-width: 320px)': { 
+            width: '60%',
+            height: '37px',
+            fontSize: '90%'
+        },
+        '@media (min-width: 481px)': { 
+            width: '50%',
+            height: '42px',
+            fontSize: '100%'
+        },
+        '@media (min-width: 769px)': { 
+            width: '45%' 
+        },
     }
 }))

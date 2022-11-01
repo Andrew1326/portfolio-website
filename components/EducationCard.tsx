@@ -14,7 +14,7 @@ const EducationCard = ({ fields, index }: TProps): JSX.Element => {
     const { classes } = useStyles()
 
     return (
-        <Card shadow="xl" p="xs" m='sm' radius="md" withBorder>
+        <Card className={classes.card} shadow="xl" p="xs" radius="md" withBorder>
             <Box className={classes.card_content_container}>
                 {
                     index % 2 === 0 ? <>

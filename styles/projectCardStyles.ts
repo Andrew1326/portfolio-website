@@ -13,6 +13,7 @@ export const useStyles = createStyles(theme => ({
             width: '50%',
             padding: '2%'
         },
+
     },
 
     project_title_container: {
