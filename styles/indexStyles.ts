@@ -31,6 +31,7 @@ export const useStyles = createStyles(theme => ({
     
             '@media (min-width: 320px)': { visibility: 'hidden' },
             '@media (min-width: 481px)': {
+                visibility: 'visible',
                 width: '250px',
                 height: '250px',
                 left: '3%',
@@ -49,6 +50,7 @@ export const useStyles = createStyles(theme => ({
     
             '@media (min-width: 320px)': { visibility: 'hidden' },
             '@media (min-width: 481px)': {
+                visibility: 'visible',
                 width: '150px',
                 height: '150px',
                 right: '3%',
