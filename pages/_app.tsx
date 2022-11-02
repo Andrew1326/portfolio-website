@@ -8,6 +8,7 @@ import "aos/dist/aos.css";
 import { useEffect, useState } from 'react';
 import ToTopBtn from '../components/ToTopBtn';
 import { Fonts } from '../components/Fonts';
+import favicon from '/public/favicon.ico'
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -58,6 +59,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
         <meta name="description" content="My portfolio" />
+        <link rel="shortcut icon" type="image/x-icon" href={favicon.src} />
       </Head>
       {
         showChild && <MantineProvider theme={mantineTheme} withGlobalStyles withNormalizeCSS>

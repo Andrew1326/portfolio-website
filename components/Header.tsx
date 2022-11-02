@@ -43,7 +43,7 @@ const Header = ({ colorScheme, toggleColorScheme }: TProps): JSX.Element => {
 
     //* logoLink
     const LogoLink = (): JSX.Element => <Link className={classes.logo_container} href='/' passHref>
-        <Text size='xl' className={classes.logo}>Portfolio</Text>
+        <Text style={{ fontSize: '120%' }} className={classes.logo}>Portfolio</Text>
     </Link>
 
     return (

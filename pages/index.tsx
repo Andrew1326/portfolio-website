@@ -14,10 +14,14 @@ const Home: NextPage = () => {
 
   const router = useRouter()
 
+  //* media queries
   const smallerThan481 = useMediaQuery('(max-width: 480px)')
   const smallerThan768 = useMediaQuery('(max-width: 768px)')
 
   const logoSize: string = smallerThan481 ? '150%' : smallerThan768 ? '200%' : '250%'
+
+  //* start exploring btn
+  const StartExploringBtn = (): JSX.Element => <Button className={classes.start_btn} variant='gradient' gradient={gradients[5]} onClick={() => router.push('/about')}>start exploring</Button>
 
   return (
     <>
@@ -41,15 +45,15 @@ const Home: NextPage = () => {
             <Logo size={logoSize} />
             {
               !smallerThan481 && <Center>
-              <Button className={classes.start_btn} variant='gradient' gradient={gradients[5]} onClick={() => router.push('/about')}>start exploring</Button>
+                <StartExploringBtn />
             </Center>
             }
           </Stack>
         </Box>
       </Box>
       {
-        smallerThan481 && <Center>
-          <Button className={classes.start_btn} mt='10%' variant='gradient' gradient={gradients[5]} onClick={() => router.push('/about')}>start exploring</Button>
+        smallerThan481 && <Center mt='10%'>
+          <StartExploringBtn />
         </Center>
       }
       </main>
