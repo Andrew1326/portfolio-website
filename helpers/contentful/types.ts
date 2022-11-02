@@ -143,7 +143,7 @@
 
     export interface EducationFields {
         title: string;
-        description: string;
+        description?: string;
         link?: string;
         image: Image;
         id: string;
