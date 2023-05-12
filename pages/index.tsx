@@ -39,7 +39,7 @@ const Home: NextPage = () => {
       <main>
         <Center data-aos="fade-up" data-aos-duration="1200">
           <Title order={1} className={globalClasses.h1}>
-            My name is Andrew and i&apos;m web developer
+            My name is Andrew and I&apos;m web developer
           </Title>
         </Center>
         <Center data-aos="fade-up" data-aos-duration="1500">

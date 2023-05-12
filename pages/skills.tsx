@@ -34,19 +34,21 @@ const Skills: NextPage<TProps> = ({
 
   //* create soft skills gradients
   const createSoftSkillsGradients = (softSkills: SoftSkillFields[]): ISoftSkillsWithGradient[] => {
-    let createdGradients: IGradient[];
+    let createdGradients: IGradient[] = gradients;
 
-    if (softSkills.length < gradients.length) createdGradients = gradients.slice(0, softSkills.length);
+    if (softSkills.length < gradients.length) createdGradients = createdGradients.slice(0, softSkills.length);
     else {
       for (let i = 0; gradients.length !== softSkills.length; i++) {
-        gradients.push(gradients[i]);
+        createdGradients.push(gradients[i]);
+
+        //* repeat gradients if we're currently at the end
         if (i === gradients.length - 1 && gradients.length !== softSkills.length) i = 0;
       }
 
       createdGradients = gradients;
     }
 
-    const withGradients = softSkills.map((el, i) => ({...el, gradient: gradients[i]}));
+    const withGradients = softSkills.map((el, i) => ({...el, gradient: createdGradients[i]}));
 
     return withGradients;
   };

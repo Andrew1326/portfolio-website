@@ -18,7 +18,7 @@ const About: NextPage<TProps> = ({sections, error}): JSX.Element => {
       </Head>
       <main>
         {sections
-          ? sections.map((el, i) => (
+          ? sections.map((el) => (
               <AboutSection key={el.id} title={el.title} desc={el.description.content[0].content[0].value} />
             ))
           : error && <ErrorAlert error={error} />}
