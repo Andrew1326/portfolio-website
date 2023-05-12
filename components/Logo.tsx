@@ -1,15 +1,18 @@
-import { Code } from "@mantine/core"
-import { useStyles } from '../styles/headerStyles'
+import {Code} from '@mantine/core';
+import {useStyles} from '../styles/headerStyles';
 
-type TProps = { size?: string }
+type TProps = {size?: string};
 
-const Logo = ({ size }: TProps): JSX.Element => {
+const Logo = ({size}: TProps): JSX.Element => {
+  const {classes} = useStyles();
 
-    const { classes } = useStyles()
+  const code: string = `<WebDeveloper />`;
 
-    const code: string = `<WebDeveloper />`
+  return (
+    <Code block className={classes.logo} style={{fontSize: size ?? 'auto'}}>
+      {code}
+    </Code>
+  );
+};
 
-    return <Code block className={classes.logo} style={{ fontSize: size ?? 'auto' }}>{code}</Code>
-}
-
-export default Logo
+export default Logo;
